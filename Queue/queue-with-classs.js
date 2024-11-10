@@ -1,39 +1,39 @@
-class Queue{
-    data=new Array();
+class Queue {
+    data = new Array();
     maxSize;
     currentSize;
-    constructor(size){
-        this.maxSize=size;
-        this.currentSize=0;
+    constructor(size) {
+        this.maxSize = size;
+        this.currentSize = 0;
     }
 
-    enqueue(num){
-        if(this.currentSize<this.maxSize){
-            this.data[this.currentSize]=num;
+    enqueue(num) {
+        if (this.currentSize < this.maxSize) {
+            this.data[this.currentSize] = num;
             this.currentSize++;
-        }else{
-            console.warn("Queue is full you can not add this number ",num);
+        } else {
+            console.warn("Queue is full you can not add this number ", num);
         }
     }
 
-    dequeue(){
-        if(this.currentSize>0){
-            for(var i=0;i<=this.currentSize;i++){
-                this.data[i]=this.data[i+1];
+    dequeue() {
+        if (this.currentSize > 0) {
+            for (var i = 0; i <= this.currentSize; i++) {
+                this.data[i] = this.data[i + 1];
             }
-            this.data.length=this.currentSize-1;
+            this.data.length = this.currentSize - 1;
             this.currentSize--;
-        }else{
+        } else {
             console.warn("Queue is already empty");
         }
     }
 
-    display(){
+    display() {
         console.table(this.data);
     }
 }
 
-var q=new Queue(5);
+var q = new Queue(5);
 
 q.enqueue(10);
 q.enqueue(20);

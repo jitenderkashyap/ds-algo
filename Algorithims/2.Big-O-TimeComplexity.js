@@ -1,7 +1,7 @@
-function summation(n){
-    let sum=0;
-    for(let i=1;i<=n;i++){
-        sum+=i;
+function summation(n) {
+    let sum = 0;
+    for (let i = 1; i <= n; i++) {
+        sum += i;
     }
     return sum;
 }
@@ -24,7 +24,7 @@ function summation(n){
     O(n) = Linear 
 */
 
-function summation(n){
+function summation(n) {
     return (n * (n + 1)) / 2;
 }
 

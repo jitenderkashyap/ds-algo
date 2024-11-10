@@ -1,36 +1,36 @@
-class Stack{
-    data=new Array();
+class Stack {
+    data = new Array();
     maxSize;
     currentSize;
-    constructor(size){
-        this.maxSize=size;
-        this.currentSize=0;
+    constructor(size) {
+        this.maxSize = size;
+        this.currentSize = 0;
     }
 
-    push(num){
-        if(this.currentSize<this.maxSize){
-            this.data[this.currentSize]=num;
+    push(num) {
+        if (this.currentSize < this.maxSize) {
+            this.data[this.currentSize] = num;
             this.currentSize++;
-        }else{
-            console.warn("stack is full you can not add this number ",num);
+        } else {
+            console.warn("stack is full you can not add this number ", num);
         }
     }
 
-    pop(){
-        if(this.currentSize>0){
-            this.data.length=this.currentSize-1;
+    pop() {
+        if (this.currentSize > 0) {
+            this.data.length = this.currentSize - 1;
             this.currentSize--;
-        }else{
+        } else {
             console.warn("Stack is already empty");
         }
     }
 
-    display(){
+    display() {
         console.table(this.data);
     }
 }
 
-var s=new Stack(6);
+var s = new Stack(6);
 
 s.push(10);
 s.push(20);
