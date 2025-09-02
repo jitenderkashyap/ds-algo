@@ -5,64 +5,80 @@ export default class Tree {
         this.root = null;
     }
 
+    #height(node) {
+        if (!node) {
+            return 0;
+        }
+        return node.height;
+    }
+
     insert(value) {
         let node = new Node(value);
         if (this.root == null) {
             this.root = node;
         } else {
-            this.add(this.root, node);
+            this.root = this.#add(this.root, node);
         }
     }
 
-    add(root, node) {
+    #add(root, node) {
         if (node.value < root.value) {
             if (root.left == null) {
                 root.left = node;
             } else {
-                this.add(root.left, node);
+                this.#add(root.left, node);
             }
         } else {
             if (root.right == null) {
                 root.right = node;
             } else {
-                this.add(root.right, node);
+                this.#add(root.right, node);
             }
         }
+        root.height =1+Math.max(this.#height(root.left),this.#height(root.right));
+        return root;
     }
 
-    min(root){
-        if(!root.left){
+    min(root) {
+        if (!root.left) {
             return root.value;
-        }else{
+        } else {
             return this.min(root.left);
         }
     }
 
-    remove(value){
-        if(this.root==null){ return; }
-        this.root=this.delete(this.root,value);
+    max(root) {
+        if (!root.right) {
+            return root.value;
+        }
+        return this.max(root.right);
     }
 
-    delete(root,value){
+    remove(value) {
+        if (this.root == null) { return; }
+        this.root = this.delete(this.root, value);
+    }
+
+    delete(root, value) {
         // first search values
-        if(value<root.value){
-            root.left= this.delete(root.left,value); // value assignment
-        }else if(value>root.value){
-            root.right= this.delete(root.right,value); // value assignment
-        }else{
+        if (value < root.value) {
+            root.left = this.delete(root.left, value); // value assignment
+        } else if (value > root.value) {
+            root.right = this.delete(root.right, value); // value assignment
+        } else {
             // here we got value
-            if(!root.left && !root.right){
+            if (!root.left && !root.right) {
                 return null;
             }
 
-            if(!root.left){
+            if (!root.left) {
                 return root.right;
-            }else if(!root.right){
+            } else if (!root.right) {
                 return root.left;
             }
 
-            root.value=this.min(root.right);
-            root.right=this.delete(root.right,root.value);
+            root.value = this.min(root.right);
+            root.right = this.delete(root.right, root.value);
 
         }
         return root;
@@ -70,5 +86,62 @@ export default class Tree {
 
     print() {
         console.log(this.root);
+    }
+
+    size() {
+        if (!this.root) { return 0; }
+        return 1 + this.#getSize(this.root.left) + this.#getSize(this.root.right);
+    }
+    #getSize(root) {
+        if (!root) { return 0; } // base case
+        return 1 + this.#getSize(root.left) + this.#getSize(root.right);
+    }
+
+    size2() {
+        if (!this.root) { return 0; }
+        let queue = [this.root];
+        let count = 0;
+        while (queue.length > 0) {
+            let node = queue.shift();
+            count++;
+            if (node.left) { queue.push(node.left); }
+            if (node.right) { queue.push(node.right); }
+        }
+        return count;
+    }
+
+    sum() {
+        if (!this.root) { return 0; }
+        return this.root.value + this.#getSum(this.root.left) + this.#getSum(this.root.right);
+    }
+    #getSum(root) {
+        if (!root) { return 0; }
+        return root.value + this.#getSum(root.left) + this.#getSum(root.right);
+    }
+
+    sum2() {
+        if (!this.root) { return 0; }
+        let sum = 0;
+        let queue = [this.root];
+        while (queue.length > 0) {
+            let current = queue.shift();
+            sum += current.value;
+            if (current.left) { queue.push(current.left); }
+            if (current.right) { queue.push(current.right); }
+        }
+        return sum;
+    }
+
+    levelOrderTravesal() {
+        if (!this.root) { return null; }
+        let arr = [];
+        let queue = [this.root];
+        while (queue.length > 0) {
+            let current = queue.shift();
+            arr.push(current.value);
+            if (current.left) { queue.push(current.left); }
+            if (current.right) { queue.push(current.right); }
+        }
+        return arr;
     }
 }
