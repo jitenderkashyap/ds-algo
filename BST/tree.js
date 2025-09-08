@@ -35,7 +35,7 @@ export default class Tree {
                 this.#add(root.right, node);
             }
         }
-        root.height =1+Math.max(this.#height(root.left),this.#height(root.right));
+        root.height = 1 + Math.max(this.#height(root.left), this.#height(root.right));
         return root;
     }
 
@@ -82,10 +82,6 @@ export default class Tree {
 
         }
         return root;
-    }
-
-    print() {
-        console.log(this.root);
     }
 
     size() {
@@ -143,5 +139,52 @@ export default class Tree {
             if (current.right) { queue.push(current.right); }
         }
         return arr;
+    }
+
+    spiralLevelOrderTraversal(root) {
+        if (!root) return [];
+
+        const result = [];
+        const queue = [];
+        let leftToRight = true;
+
+        queue.push(root);
+
+        while (queue.length > 0) {
+            const levelSize = queue.length;
+            const level = new Array(levelSize);
+
+            for (let i = 0; i < levelSize; i++) {
+                const node = queue.shift();
+
+                // Decide index based on direction
+                const index = leftToRight ? i : levelSize - 1 - i;
+                level[index] = node.data;
+
+                if (node.left) queue.push(node.left);
+                if (node.right) queue.push(node.right);
+            }
+
+            // Add current level to result
+            result.push(...level);
+
+            // Toggle direction
+            leftToRight = !leftToRight;
+        }
+
+        return result;
+    }
+
+    getLeafNodeCount() {
+        if (this.root == null) { return 1; }
+        return this.#getLeafNode(this.root);
+    }
+
+    #getLeafNode(root) {
+        if (!root) { return 0; }
+        if (!root.left && !root.right) {
+            return 1;
+        }
+        return this.#getLeafNode(root.left) + this.#getLeafNode(root.right);
     }
 }
